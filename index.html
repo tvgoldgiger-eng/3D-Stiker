@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAISSTIK | Магазин 3D стикеров</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: #333;
+        /* Мягкий градиент: розовый слева, желтый справа, белый в центре */
+        background: linear-gradient(90deg, #ffe4e1 0%, #ffffff 35%, #ffffff 65%, #fffacd 100%);
+        background-attachment: fixed;
+    }
+
+    /* НАВИГАЦИЯ */
+    nav {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        padding: 20px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: #ff8da1; /* Нежно-розовый */
+        letter-spacing: 2px;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .nav-btn {
+        background: transparent;
+        border: none;
+        color: #888;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+        color: #333;
+        background: rgba(255, 228, 225, 0.5);
+    }
+
+    .nav-btn.active {
+        color: #fff;
+        background: #ff8da1;
+        box-shadow: 0 4px 10px rgba(255, 141, 161, 0.4);
+    }
+
+    /* КОНТЕНТ */
+    main {
+        flex: 1;
+        margin-top: 120px;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .page-content {
+        display: none;
+        width: 100%;
+        max-width: 1000px;
+        animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .page-content.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ЗАГОЛОВКИ И ТЕКСТ */
+    h1 {
+        font-size: 38px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #444;
+    }
+
+    h1 span {
+        color: #ff8da1;
+    }
+
+    .hero-text {
+        font-size: 18px;
+        color: #666;
+        text-align: center;
+        line-height: 1.6;
+        margin-bottom: 40px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #ffb347; /* Нежно-желтый/оранжевый */
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .section-desc {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.7;
+        text-align: center;
+        margin-bottom: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        border: 1px solid #fff;
+    }
+
+    /* СЕТКА ГАЛЕРЕИ */
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .gallery-item {
+        background: #fff;
+        border: 2px dashed #ffd1dc;
+        border-radius: 20px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ff8da1;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 5px 15px rgba(255, 141, 161, 0.1);
+    }
+
+    .gallery-item:hover {
+        border-color: #ffb347;
+        color: #ffb347;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(255, 179, 71, 0.2);
+    }
+
+    /* КНОПКА ЗАКАЗА */
+    .order-btn-wrapper {
+        text-align: center;
+        margin: 50px 0;
+    }
+
+    .btn-order {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 18px 45px;
+        font-weight: 800;
+        font-size: 18px;
+        color: #fff;
+        background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+        border: none;
+        border-radius: 30px;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
+    }
+
+    .btn-order:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 25px rgba(255, 154, 158, 0.6);
+    }
+
+    /* ПОДВАЛ */
+    .site-footer {
+        text-align: center;
+        padding: 30px 20px;
+        color: #999;
+        font-size: 13px;
+        margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+        h1 { font-size: 28px; }
+        nav { flex-direction: column; padding: 15px; }
+        main { margin-top: 160px; }
+        .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">NAISSTIK</div>
+    <div class="nav-menu">
+        <button class="nav-btn active" onclick="switchTab('home', this)">Главная</button>
+        <button class="nav-btn" onclick="switchTab('stickers', this)">3D Стикеры</button>
+        <button class="nav-btn" onclick="switchTab('keychains', this)">3D Брелки</button>
+        <button class="nav-btn" onclick="switchTab('frames', this)">Рамки</button>
+        <button class="nav-btn" onclick="switchTab('acrylic', this)">Акрил</button>
+    </div>
+</nav>
+
+<main>
+    <!-- ГЛАВНАЯ -->
+    <div id="home" class="page-content active">
+        <h1>Добро пожаловать в <br><span>NAISSTIK</span></h1>
+        <p class="hero-text">Мы создаем уникальные объемные 3D-стикеры, брелки и магнитные рамки, которые выделят тебя из толпы. Ручная работа, высокое качество и только самые милые и крутые дизайны.</p>
+        <div class="order-btn-wrapper">
+            <a href="https://vk.ru/internets_magazine" target="_blank" class="btn-order">Перейти в магазин ВК</a>
+        </div>
+    </div>
+
+    <!-- 3D СТИКЕРЫ -->
+    <div id="stickers" class="page-content">
+        <h2 class="section-title">3D Стикеры</h2>
+        <div class="section-desc">
+            Наши 3D-стикеры создаются с использованием многослойной печати и специального эпоксидного покрытия. Благодаря этому они получаются объемными, приятными на ощупь и устойчивыми к внешним воздействиям. Идеально клеятся на ноутбуки, телефоны и скейты!
+        </div>
+        <div class="gallery">
+            <div class="gallery-item">Фото 1</div>
+            <div class="gallery-item">Фото 2</div>
+            <div class="gallery-item">Фото 3</div>
+            <div class="gallery-item">Фото 4</div>
+        </div>
+        <div class="order-btn-wrapper">
+            <a href="https://vk.ru/internets_magazine" target="_blank" class="btn-order">Заказать стикер</a>
+        </div>
+    </div>
+
+    <!-- 3D БРЕЛКИ -->
+    <div id="keychains" class="page-content">
+        <h2 class="section-title">3D Брелки</h2>
+        <div class="section-desc">
+            Объемные брелки для ключей или рюкзаков. Изготавливаются из прочного пластика с глянцевым покрытием. Долговечные, яркие и не стираются со временем. Отличный подарок себе или другу.
+        </div>
+        <div class="gallery">
+            <div class="gallery-item">Фото 1</div>
+            <div class="gallery-item">Фото 2</div>
+            <div class="gallery-item">Фото 3</div>
+            <div class="gallery-item">Фото 4</div>
+        </div>
+        <div class="order-btn-wrapper">
+            <a href="https://vk.ru/internets_magazine" target="_blank" class="btn-order">Заказать брелок</a>
+        </div>
+    </div>
+
+    <!-- МАГНИТНЫЕ РАМКИ -->
+    <div id="frames" class="page-content">
+        <h2 class="section-title">Магнитные Фоторамки</h2>
+        <div class="section-desc">
+            Стильные магнитные рамки для ваших любимых фотографий. Держатся на любой металлической поверхности (холодильник, сейф, магнитная доска) без клея и гвоздей. Внутри — ваш снимок или милая картинка.
+        </div>
+        <div class="gallery">
+            <div class="gallery-item">Фото 1</div>
+            <div class="gallery-item">Фото 2</div>
+            <div class="gallery-item">Фото 3</div>
+            <div class="gallery-item">Фото 4</div>
+        </div>
+        <div class="order-btn-wrapper">
+            <a href="https://vk.ru/internets_magazine" target="_blank" class="btn-order">Заказать рамку</a>
+        </div>
+    </div>
+
+    <!-- АКРИЛОВЫЕ БРЕЛКИ -->
+    <div id="acrylic" class="page-content">
+        <h2 class="section-title">Акриловые Брелки</h2>
+        <div class="section-desc">
+            Классические акриловые брелки с вашими любимыми персонажами. Легкие, прочные и очень красочные. Двусторонняя печать для максимального качества и долговечности.
+        </div>
+        <div class="gallery">
+            <div class="gallery-item">Фото 1</div>
+            <div class="gallery-item">Фото 2</div>
+            <div class="gallery-item">Фото 3</div>
+            <div class="gallery-item">Фото 4</div>
+        </div>
+        <div class="order-btn-wrapper">
+            <a href="https://vk.ru/internets_magazine" target="_blank" class="btn-order">Заказать акрил</a>
+        </div>
+    </div>
+</main>
+
+<div class="site-footer">
+    NAISSTIK &copy; 2026. Сделано с любовью.
+</div>
+
+<script>
+    // Переключение вкладок
+    function switchTab(tabId, btnElement) {
+        var contents = document.querySelectorAll('.page-content');
+        for (var i = 0; i < contents.length; i++) { contents[i].classList.remove('active'); }
+        
+        var buttons = document.querySelectorAll('.nav-btn');
+        for (var i = 0; i < buttons.length; i++) { buttons[i].classList.remove('active'); }
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) { btnElement.classList.add('active'); }
+    }
+</script>
+
+</body>
+</html>
