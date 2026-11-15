@@ -304,7 +304,7 @@
         box-shadow: 0 10px 25px rgba(216, 180, 226, 0.1);
         position: relative;
         overflow: hidden;
-        cursor: pointer; /* Добавили курсор-руку, чтобы было понятно, что можно нажать */
+        cursor: pointer;
     }
 
     .gallery-item img {
@@ -312,7 +312,7 @@
         height: 100%;
         object-fit: cover;
         display: block;
-        transition: transform 0.3s; /* Плавный зум картинки */
+        transition: transform 0.3s;
     }
 
     .gallery-item:hover {
@@ -322,20 +322,20 @@
     }
 
     .gallery-item:hover img {
-        transform: scale(1.05); /* Легкий зум внутри рамки при наведении */
+        transform: scale(1.05);
     }
 
     /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОГО ПРОСМОТРА (ЛАЙТБОКС) */
     #lightbox {
-        display: none; /* Скрыто по умолчанию */
+        display: none;
         position: fixed;
         z-index: 9999;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.85); /* Темный фон */
-        backdrop-filter: blur(5px); /* Легкое размытие фона */
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(5px);
         justify-content: center;
         align-items: center;
     }
@@ -345,7 +345,7 @@
         max-height: 90%;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        animation: zoomIn 0.3s ease-out; /* Анимация появления */
+        animation: zoomIn 0.3s ease-out;
     }
 
     @keyframes zoomIn {
@@ -539,15 +539,15 @@
         </div>
 
         <div class="gallery">
-            <!-- 8 КАРТОЧЕК БРЕЛКОВ -->
-            <div class="gallery-item"><img src="keychain1.jpg" alt="3D Брелок 1"></div>
-            <div class="gallery-item"><img src="keychain2.jpg" alt="3D Брелок 2"></div>
-            <div class="gallery-item"><img src="keychain3.jpg" alt="3D Брелок 3"></div>
-            <div class="gallery-item"><img src="keychain4.jpg" alt="3D Брелок 4"></div>
-            <div class="gallery-item"><img src="keychain5.jpg" alt="3D Брелок 5"></div>
-            <div class="gallery-item"><img src="keychain6.jpg" alt="3D Брелок 6"></div>
-            <div class="gallery-item"><img src="keychain7.jpg" alt="3D Брелок 7"></div>
-            <div class="gallery-item"><img src="keychain8.jpg" alt="3D Брелок 8"></div>
+            <!-- 8 КАРТОЧЕК БРЕЛКОВ (НОВЫЕ ССЫЛКИ) -->
+            <div class="gallery-item"><img src="izOf4umBfdS1suzUb7REVUgobOtrR5r9m_CtLITJbpwInxezO6EALu0lMln6l7TPnSzVvA8BRvrpqQwt8iWuXCvfd5e.jpg" alt="3D Брелок 1"></div>
+            <div class="gallery-item"><img src="7pgzMPrRjrS2Xf9EH32gq73BIU5MKZcdsNLE3YnMW7FbofjLlP9-7f9Zt9COJgEJPAV3mmoV8AFcETpk2Lt6KDh.jpg" alt="3D Брелок 2"></div>
+            <div class="gallery-item"><img src="8eOo2F3X6FjLakAsIvPZUbIM2eV6-Y2dyWQhQ2d33IT63rfq2bif1u4egvL6Ae8mVlvZDIU8zKwwK1bilg9xcqE.jpg" alt="3D Брелок 3"></div>
+            <div class="gallery-item"><img src="IfjnnN-1Am8gfz2DfPNtOwuKoqk_WIxhxRraeeVEtGa7a2lalqpbDghbogTEX90oRjTunPDh6Xhvekb-9nwQQKjXNmjpg.jpg" alt="3D Брелок 4"></div>
+            <div class="gallery-item"><img src="9f046afa2986c0d7537805c204061537.jpg" alt="3D Брелок 5"></div>
+            <div class="gallery-item"><img src="0d2df72cb4a03a1ba57f8fd38da94102.jpg" alt="3D Брелок 6"></div>
+            <div class="gallery-item"><img src="3857592cbe149fb7f4ae28e753404913.jpg" alt="3D Брелок 7"></div>
+            <div class="gallery-item"><img src="93d3b9d85435ec7705d452586f224ea9.jpg" alt="3D Брелок 8"></div>
         </div>
 
         <div class="order-info">
@@ -660,23 +660,20 @@
     var lightboxImg = document.getElementById('lightbox-img');
     var closeBtn = document.querySelector('.close-lightbox');
     
-    // Находим все картинки в галереях и добавляем на них клик
     var galleryImages = document.querySelectorAll('.gallery-item img');
     
     galleryImages.forEach(function(img) {
         img.addEventListener('click', function(e) {
-            e.stopPropagation(); // Чтобы клик не срабатывал дважды
+            e.stopPropagation();
             lightbox.style.display = 'flex';
-            lightboxImg.src = this.src; // Берем ссылку на картинку, по которой кликнули
+            lightboxImg.src = this.src;
         });
     });
     
-    // Закрытие по крестику
     closeBtn.addEventListener('click', function() {
         lightbox.style.display = 'none';
     });
     
-    // Закрытие по клику в любом месте на темном фоне
     lightbox.addEventListener('click', function(e) {
         if (e.target !== lightboxImg) {
             lightbox.style.display = 'none';
