@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NAISSTIK | Магазин 3D стикеров ручной работы</title>
-<!-- Иконка для вкладки браузера (вшита прямо в код) -->
+<!-- Иконка для вкладки браузера -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23d8b4e2'/><path d='M50 25 L60 45 L80 50 L60 55 L50 75 L40 55 L20 50 L40 45 Z' fill='white'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -291,8 +291,7 @@
 
     .gallery-item {
         background: #fff;
-        /* ТУТ ИЗМЕНИЛИ ЦВЕТ ОБВОДКИ НА НЕЖНО-ФИОЛЕТОВЫЙ */
-        border: 3px dashed #d8b4e2; 
+        border: 3px dashed #d8b4e2;
         border-radius: 25px;
         height: 250px;
         display: flex;
@@ -305,6 +304,7 @@
         box-shadow: 0 10px 25px rgba(216, 180, 226, 0.1);
         position: relative;
         overflow: hidden;
+        cursor: pointer; /* Добавили курсор-руку, чтобы было понятно, что можно нажать */
     }
 
     .gallery-item img {
@@ -312,12 +312,61 @@
         height: 100%;
         object-fit: cover;
         display: block;
+        transition: transform 0.3s; /* Плавный зум картинки */
     }
 
     .gallery-item:hover {
         border-color: #c792ea;
         transform: translateY(-8px) scale(1.02);
         box-shadow: 0 15px 35px rgba(199, 146, 234, 0.3);
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.05); /* Легкий зум внутри рамки при наведении */
+    }
+
+    /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОГО ПРОСМОТРА (ЛАЙТБОКС) */
+    #lightbox {
+        display: none; /* Скрыто по умолчанию */
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85); /* Темный фон */
+        backdrop-filter: blur(5px); /* Легкое размытие фона */
+        justify-content: center;
+        align-items: center;
+    }
+
+    #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        animation: zoomIn 0.3s ease-out; /* Анимация появления */
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .close-lightbox {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: 50px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        line-height: 1;
+    }
+
+    .close-lightbox:hover {
+        color: #d8b4e2;
     }
 
     /* КНОПКА ЗАКАЗА */
@@ -587,6 +636,12 @@
     NAISSTIK &copy; 2026. Сделано с душой и любовью.
 </div>
 
+<!-- САМ БЛОК ДЛЯ ПОЛНОЭКРАННОГО ФОТО -->
+<div id="lightbox">
+    <span class="close-lightbox">&times;</span>
+    <img id="lightbox-img" src="" alt="Просмотр фото">
+</div>
+
 <script>
     // Переключение вкладок
     function switchTab(tabId, btnElement) {
@@ -599,6 +654,34 @@
         document.getElementById(tabId).classList.add('active');
         if (btnElement) { btnElement.classList.add('active'); }
     }
+
+    // ЛОГИКА ДЛЯ ПОЛНОЭКРАННОГО ПРОСМОТРА ФОТО
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var closeBtn = document.querySelector('.close-lightbox');
+    
+    // Находим все картинки в галереях и добавляем на них клик
+    var galleryImages = document.querySelectorAll('.gallery-item img');
+    
+    galleryImages.forEach(function(img) {
+        img.addEventListener('click', function(e) {
+            e.stopPropagation(); // Чтобы клик не срабатывал дважды
+            lightbox.style.display = 'flex';
+            lightboxImg.src = this.src; // Берем ссылку на картинку, по которой кликнули
+        });
+    });
+    
+    // Закрытие по крестику
+    closeBtn.addEventListener('click', function() {
+        lightbox.style.display = 'none';
+    });
+    
+    // Закрытие по клику в любом месте на темном фоне
+    lightbox.addEventListener('click', function(e) {
+        if (e.target !== lightboxImg) {
+            lightbox.style.display = 'none';
+        }
+    });
 </script>
 
 </body>
